@@ -1,4 +1,3 @@
-
 const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
@@ -10,7 +9,9 @@ app.use(cors());
 
 app.post('/submit', (req, res) => {
   console.log('Received data from the form:', req.body);
-  res.sendStatus(200);
+  var results = "vved MR presidenthsg";
+  res.send(JSON.parse(JSON.stringify(results)));
+  // res.sendStatus(200);
 });
 
 app.listen(8080 ,(err)=>{

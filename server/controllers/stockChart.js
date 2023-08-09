@@ -2,7 +2,7 @@ const axios = require('axios')
 
 const chart = async ()=>{
     
-    let stockSymbol ="AAATECH";
+    let stockSymbol ="RELIANCE";
 
 
     let data = await axios.get(

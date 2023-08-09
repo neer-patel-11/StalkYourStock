@@ -8,6 +8,10 @@ function App() {
     message: '',
   });
 
+  const [state, setState] = useState({
+    results: null,
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -19,21 +23,31 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch('http://localhost:8080/submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    const data = formData;
+    console.log(data);
+    fetch('http://localhost:8080/submit',{
 
-      if (response.ok) {
-        console.log('Data sent successfully!');
-      }
-    } catch (error) {
-      console.error('Error sending data:', error);
-    }
+      method: 'POST',
+
+      headers :{
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': 'true'
+      },
+      body : data
+    })
+      .then(
+        (response) => {
+          console.log(response);
+          return response.json().then((results)=>setState({ results: results }));
+
+        } // if the response is a JSON object
+      ).then(
+      success =>console.log(success) // Handle the success response object
+    ).catch(
+      error => null // Handle the error response object
+    )
+
   };
 
   return (
@@ -54,8 +68,12 @@ function App() {
         </div>
         <button type="submit">Submit</button>
       </form>
+      <div>
+      <div>this is my result: {state.results}</div>
+      </div>
     </div>
   );
 }
 
 export default App;
+
