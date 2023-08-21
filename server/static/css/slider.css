@@ -1,0 +1,348 @@
+        @import url("https://fonts.googleapis.com/css?family=Lato:700");
+
+:root {
+  --shadow: 20px 20px 50px rgba(0, 0, 0, 0.1);
+  --cont-w: 290px;
+  --cont-h: 416px;
+  --dist-near: 16px;
+  --dist-far: 32px;
+  --dist-away: 362px;
+  --border-rad: 8px;
+  --anim-duration: 16s;
+  --anim-easing: ease-out;
+}
+@media (max-width: 600px) {
+  :root {
+    --shadow: 10px 10px 25px rgba(0, 0, 0, 0.1);
+    --cont-w: calc(290px / 2);
+    --cont-h: calc(416px / 2);
+    --dist-near: calc(16px / 2);
+    --dist-far: calc(32px / 2);
+    --dist-away: calc(338px / 2);
+    --border-rad: calc(8px / 2);
+  }
+}
+
+.container_card {
+  display: block;
+  position: relative;
+  width: var(--cont-w);
+  height: var(--cont-h);
+  margin-top: 48px;
+}
+
+/*
+Animaation keypoints:
+- first-card    90% - 0% -> 15% - 25%
+- second-card   15% - 25% -> 40% - 50%
+- third-card    40% - 50% -> 65% - 75%
+- fourth-card   65% -75% -> 90% - 100%
+*/
+@keyframes text1-anim {
+  0%,
+  15%,
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  25% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+@keyframes text2-anim {
+  0%,
+  15%,
+  100% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  25%,
+  40% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes text3-anim {
+  0%,
+  40%,
+  100% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  50%,
+  65% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  75% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+@keyframes text4-anim {
+  0%,
+  65% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  75%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+@keyframes move1 {
+  0%,
+  15%,
+  100% {
+    transform: translate(0px, 0px);
+    z-index: 3;
+    opacity: 1;
+  }
+  /* 1. transition */
+  20% {
+    transform: translate(var(--dist-away), var(--dist-near));
+    z-index: 3;
+    opacity: 0;
+  }
+  25%,
+  40% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    z-index: 1;
+    opacity: 0;
+  }
+  /* 2. transition */
+  45% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    z-index: 1;
+  }
+  50%,
+  65% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    opacity: 1;
+    z-index: 1;
+  }
+  /* 3. transition */
+  70% {
+    z-index: 2;
+  }
+  75%,
+  90% {
+    transform: translate(var(--dist-near), var(--dist-near));
+    z-index: 2;
+  }
+  /* 4. transition */
+  95% {
+    z-index: 3;
+  }
+}
+
+@keyframes move2 {
+  0%,
+  15%,
+  100% {
+    transform: translate(var(--dist-near), var(--dist-near));
+    z-index: 2;
+  }
+  /* 1. transition */
+  20% {
+    z-index: 3;
+  }
+  25%,
+  40% {
+    transform: translate(0px, 0px);
+    z-index: 3;
+    opacity: 1;
+  }
+  /* 2. transition */
+  45% {
+    transform: translate(var(--dist-away), var(--dist-near));
+    z-index: 3;
+    opacity: 0;
+  }
+  50%,
+  65% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    z-index: 1;
+    opacity: 0;
+  }
+  /* 3. transition */
+  70% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    z-index: 1;
+  }
+  75%,
+  90% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    opacity: 1;
+    z-index: 1;
+  }
+  /* 4. transition */
+  95% {
+    z-index: 2;
+  }
+}
+@keyframes move3 {
+  0%,
+  15%,
+  100% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    opacity: 1;
+    z-index: 1;
+  }
+  /* 1. transition */
+  20% {
+    z-index: 2;
+  }
+  25%,
+  40% {
+    transform: translate(var(--dist-near), var(--dist-near));
+    z-index: 2;
+  }
+  /* 2. transition */
+  45% {
+    z-index: 3;
+  }
+  50%,
+  65% {
+    transform: translate(0px, 0px);
+    z-index: 3;
+    opacity: 1;
+  }
+  /* 3. transition */
+  70% {
+    transform: translate(var(--dist-away), var(--dist-near));
+    z-index: 3;
+    opacity: 0;
+  }
+  75%,
+  90% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    z-index: 1;
+    opacity: 0;
+  }
+  /* 4. transition */
+  95% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    z-index: 1;
+  }
+}
+@keyframes move4 {
+  0%,
+  15%,
+  100% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    z-index: 1;
+    opacity: 0;
+  }
+  /* 1. transition */
+  20% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    z-index: 1;
+  }
+  25%,
+  40% {
+    transform: translate(var(--dist-far), var(--dist-far));
+    opacity: 1;
+    z-index: 1;
+  }
+  /* 2. transition */
+  45% {
+    z-index: 2;
+  }
+  50%,
+  65% {
+    transform: translate(var(--dist-near), var(--dist-near));
+    z-index: 2;
+  }
+  /* 3. transition */
+  70% {
+    z-index: 3;
+  }
+  75%,
+  90% {
+    transform: translate(0px, 0px);
+    z-index: 3;
+    opacity: 1;
+  }
+  /* 4. transition */
+  95% {
+    transform: translate(var(--dist-away), var(--dist-near));
+    z-index: 3;
+    opacity: 0;
+  }
+}
+
+.box_card {
+  width: 187%;
+  height: 110%;
+  position: absolute;
+  background-position: top center;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  border-radius: var(--border-rad);
+  box-shadow: var(--shadow);
+  opacity: 1;
+  z-index: 2;
+}
+.box_card1 {
+  z-index: 4;
+  background-image: url("https://businera.shop/images/singUp_1.jpg");
+
+  animation: move1 var(--anim-duration) var(--anim-easing) infinite;
+}
+.box_card2 {
+  z-index: 3;
+  background-image: url("https://businera.shop/images/coursal_3.jpg");
+
+  animation: move2 var(--anim-duration) var(--anim-easing) infinite;
+}
+.box_card3 {
+  z-index: 1;
+  background-image: url("https://businera.shop/images/coursal_1.jpg");
+
+  animation: move3 var(--anim-duration) var(--anim-easing) infinite;
+}
+.box_card4 {
+  z-index: 1;
+  background-image: url("https://businera.shop/images/singUp_3.jpg");
+
+  animation: move4 var(--anim-duration) var(--anim-easing) infinite;
+}
+
+.text {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #adadad;
+  position: absolute;
+  bottom: -56px;
+  left: 48px;
+}
+.text1 {
+  animation: text1-anim var(--anim-duration) infinite;
+}
+.text2 {
+  animation: text2-anim var(--anim-duration) infinite;
+}
+.text3 {
+  animation: text3-anim var(--anim-duration) infinite;
+}
+.text4 {
+  animation: text4-anim var(--anim-duration) infinite;
+}
