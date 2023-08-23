@@ -1,12 +1,6 @@
 const { name } = require('ejs');
 const UserSchema = require('../models/userModel')
 
-let data = [
-    { id: 1, name: 'wclhbd 1' },
-    { id: 2, name: 'Item 2' },
-    { id: 3, name: 'Item 3' },
-  ];
-
 
 const login = (req,res)=>{
     console.log("Login")
@@ -17,7 +11,7 @@ const login = (req,res)=>{
     });
     console.log(user)
     user.save()
-    res.json(data);
+    res.json({"msg":"Data sent succesfully."});
 
     // res.send({"name":"ne"})
 }
