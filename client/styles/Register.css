@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .loginComponent input {
+        @apply border border-black
+    }
+
+    .loginComponent {
+        @apply p-5 flex justify-center
+    }
+
+    .loginForm {
+        @apply flex justify-center flex-col
+    }
+
+    .loginContainer {
+        @apply bg-white flex justify-center w-fit
+    }
+
+}

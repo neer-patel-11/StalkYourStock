@@ -1,13 +1,12 @@
-
-const stockInfo = require('../controllers/stockInfo')
+const stockInfo = require("../controllers/stockInfo");
 
 // =========================
 
 // using express
-const express = require('express')
+const express = require("express");
 const app = express();
 
-app.get('/', stockInfo.info);
+app.get("/stockDetails", stockInfo.info);
 
 module.exports = app;
 // ============================
