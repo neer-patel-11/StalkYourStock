@@ -1,4 +1,4 @@
-const stockInfo = require("../controllers/stockInfo");
+const homeController = require("../controllers/homeController");
 
 // =========================
 
@@ -6,8 +6,6 @@ const stockInfo = require("../controllers/stockInfo");
 const express = require("express");
 const app = express();
 
-app.get("/stockDetails", stockInfo.info);
-
-app.get("/name",stockInfo.nameInfo);
+// app.get("/name", homeController.info);
 module.exports = app;
 // ============================

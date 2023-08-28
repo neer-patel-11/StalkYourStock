@@ -12,6 +12,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 var userRoute = require("./routes/userRoute.js");
 var stockRoute = require("./routes/stockRoute.js");
+var homeRoute = require("./routes/homeRoute.js");
 
 app.use(express.json());
 
@@ -20,6 +21,7 @@ app.use(cors());
 
 app.use("/user", userRoute);
 app.use("/stock", stockRoute);
+app.use("/", homeRoute);
 
 app.post("/submit", (req, res) => {
   // console.log('Received data from the form:', req.body);
