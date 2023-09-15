@@ -25,12 +25,12 @@ const nameInfo = async (req, res) => {
 
 const stockInfo = async (req, res) => {
   let stockSymbol = req.query.name;
-  console.log(stockSymbol);
+  // console.log(stockSymbol);
 
   let data = await axios.get(
     `https://query1.finance.yahoo.com/v6/finance/quoteSummary/${stockSymbol}.ns?modules=financialData`
   );
-  console.log(data.data.quoteSummary.result[0]);
+  // console.log(data.data.quoteSummary.result[0]);
   try {
     const details = data.data.quoteSummary.result[0];
     res.json({ details: details });

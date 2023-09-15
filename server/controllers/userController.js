@@ -22,6 +22,7 @@ const login = async (req, res) => {
 
   if (userData) {
     if (userData.password == hexPassword) {
+      console.log("success");
       res.json({ msg: "Login Success" });
     } else {
       //pass invalid
