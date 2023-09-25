@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
+const PortfolioSchema = require("./portfolioModel.js");
+const TransactionSchema = require("./transactionModel.js");
 
 // user schema
 const userSchema = new mongoose.Schema({
@@ -63,10 +65,17 @@ const userSchema = new mongoose.Schema({
     required: true,
     maxlength: 260,
   },
+
+  transaction: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TransactionSchema",
+    },
+  ],
 });
 
 // ======================
-const UserSchema = mongoose.model("User", userSchema);
+const UserSchema = mongoose.model("UserSchema", userSchema);
 
 // exporting userschema
 module.exports = UserSchema;

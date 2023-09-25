@@ -19,11 +19,11 @@ const login = async (req, res) => {
   let hexPassword = await securePassword(req.body.password).then();
 
   const userData = await UserSchema.findOne({ email: email });
-
+  console.log(userData);
   if (userData) {
     if (userData.password == hexPassword) {
       console.log("success");
-      res.json({ msg: "Login Success" });
+      res.json({ email: userData.email });
     } else {
       //pass invalid
       res.json({ msg: "password invalid" });
@@ -66,8 +66,15 @@ const logout = (req, res) => {
   console.log("logout");
 };
 
+const getProfile = async (req, res) => {
+  const email = req.query.email;
+  const userData = await UserSchema.findOne({ email: email });
+  res.json({ userData: userData });
+};
+
 module.exports = {
   login: login,
   register: register,
   logout: logout,
+  getProfile: getProfile,
 };

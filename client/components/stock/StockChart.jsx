@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import GetChart from "./GetChart";
+import GetChart from "./GetChart.jsx";
 
 const StockChart = (props) => {
   const [chartInfo, setChartInfo] = useState([]);

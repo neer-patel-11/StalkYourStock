@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import StockChart from "./StockChart";
 import StockTextDetails from "./StockTextDetails";
-
-// import myCSV from "@public/EQUITY_L.csv";
+import { Button } from "@mantine/core";
 
 const StockDetails = () => {
   const [showDetails, setShowDetails] = useState(true);
@@ -58,6 +57,7 @@ const StockDetails = () => {
       <button onClick={toggleButton}>See Chart</button>
       {showDetails && <StockTextDetails name={name} />}
       {!showDetails && <StockChart name={name} />}
+      <Button>Settings</Button>
     </div>
   );
 };

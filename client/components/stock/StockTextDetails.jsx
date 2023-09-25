@@ -43,7 +43,6 @@ const StockTextDetails = (props) => {
     axios
       .get("http://localhost:8080/stock/stockDetails?name=" + props.name)
       .then((response) => {
-        console.log("Hlo");
         const newDetails = response.data.details.financialData;
         // console.log(newDetails);
         setDetails((prevState) => ({
@@ -101,12 +100,34 @@ const StockTextDetails = (props) => {
           financialCurrency: newDetails.financialCurrency || "",
         }));
 
-        console.log(details);
+        // console.log(details);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   });
+
+  const buyStock = async (e) => {
+    e.preventDefault();
+    let type = e.target.value;
+    const totalStock = document.querySelector("#stockNo").value;
+    axios
+      .get(
+        "http://localhost:8080/transaction?name=" +
+          props.name +
+          "&type=" +
+          type +
+          "&count=" +
+          totalStock +
+          "&currentPrice=" +
+          details.currentPrice.raw +
+          "&email=" +
+          localStorage.getItem("email")
+      )
+      .then((response) => {
+        console.log(response.data.PortfolioData);
+      });
+  };
 
   return (
     <>
@@ -147,6 +168,13 @@ const StockTextDetails = (props) => {
           <li>Financial Currency: {details.financialCurrency}</li>
         </ul>
       </div>
+      <input type="number" id="stockNo" min="1" />
+      <button onClick={buyStock} value="Buy">
+        Buy
+      </button>
+      <button onClick={buyStock} value="Sell">
+        Sell
+      </button>
     </>
   );
 };

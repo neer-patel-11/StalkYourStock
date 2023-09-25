@@ -2,9 +2,7 @@ const path = require("path");
 // connecting to atlas Mongo
 
 const mongoose = require("mongoose");
-mongoose.connect(
-  "mongodb+srv://patelhitarth08:VOnWz1VIXXJVVllN@cluster0.hcopitj.mongodb.net/?retryWrites=true&w=majority"
-);
+mongoose.connect("mongodb://localhost:27017/StalkYourStock");
 
 const express = require("express");
 const app = express();
@@ -13,7 +11,8 @@ const cors = require("cors");
 var userRoute = require("./routes/userRoute.js");
 var stockRoute = require("./routes/stockRoute.js");
 var homeRoute = require("./routes/homeRoute.js");
-
+var portfolioRoute = require("./routes/portfolioRoute.js");
+var transactionRoute = require("./routes/transactionRoute.js");
 app.use(express.json());
 
 // app.use(bodyParser.json());
@@ -22,6 +21,8 @@ app.use(cors());
 app.use("/user", userRoute);
 app.use("/stock", stockRoute);
 app.use("/", homeRoute);
+app.use("/portfolio", portfolioRoute);
+app.use("/transaction", transactionRoute);
 
 app.post("/submit", (req, res) => {
   // console.log('Received data from the form:', req.body);

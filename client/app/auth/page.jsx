@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-import Register from "@components/Register";
-import Login from "@components/Login";
+import Register from "@components/auth/Register";
+import Login from "@components/auth/Login";
 
 export default function Home() {
   const [isLogin, setisLogin] = useState({
@@ -21,9 +21,9 @@ export default function Home() {
 
   return (
     <div className="flex justify-center">
-      {/* <button id="toggle" onClick={toggleLogin}>
+      <button id="toggle" onClick={toggleLogin}>
         Register
-      </button> */}
+      </button>
       {isLogin && <Login auth="Register" toggleLogin={toggleLogin} />}
 
       {!isLogin && <Register auth="Login" toggleLogin={toggleLogin} />}
