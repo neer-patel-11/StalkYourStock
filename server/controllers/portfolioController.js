@@ -28,4 +28,18 @@ const addToPortfolio = async (req, res) => {
   //   console.log("In Port");
 };
 
-module.exports = { addPortfolio: addToPortfolio };
+const getPortfolio = async (req, res) => {
+  try {
+    let email = req.query.email;
+    const user = await UserSchema.findOne({ email: email });
+
+    const portfolio = await PortfolioSchema.findOne({ user: user._id });
+    console.log(portfolio);
+    res.json({ portfolio: portfolio });
+  } catch (e) {
+    console.log(e);
+  }
+  //   console.log("In Port");
+};
+
+module.exports = { addPortfolio: addToPortfolio, getPortfolio: getPortfolio };

@@ -1,5 +1,4 @@
-"use client";
-import ReactDOM from 'react-dom'
+'use client'
 import * as THREE from 'three/src/Three'
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 // A THREE.js React renderer, see: https://github.com/drcmda/react-three-fiber
@@ -11,9 +10,9 @@ import './styles.css'
 
 // Import and register postprocessing classes as three-native-elements for both react-three-fiber & react-spring
 // They'll be available as native elements <effectComposer /> from then on ...
-import {EffectComposer}  from './postprocessing/EffectComposer'
-import  {RenderPass}  from './postprocessing/RenderPass'
-import  {GlitchPass}  from './postprocessing/GlitchPass'
+import { EffectComposer } from './postprocessing/EffectComposer'
+import { RenderPass } from './postprocessing/RenderPass'
+import { GlitchPass } from './postprocessing/GlitchPass'
 applySpring({ EffectComposer, RenderPass, GlitchPass })
 applyThree({ EffectComposer, RenderPass, GlitchPass })
 
@@ -25,7 +24,7 @@ function Image({ url, opacity, scale, ...props }) {
   const unhover = useCallback(() => setHover(false), [])
   const { factor } = useSpring({ factor: hovered ? 1.1 : 1 })
   return (
-    <a.mesh {...props} onHover={hover} onUnhover={unhover} scale={factor.interpolate(f => [scale * f, scale * f, 1])}>
+    <a.mesh {...props} onHover={hover} onUnhover={unhover} scale={factor.interpolate((f) => [scale * f, scale * f, 1])}>
       <planeBufferGeometry attach="geometry" args={[5, 5]} />
       <a.meshLambertMaterial attach="material" transparent opacity={opacity}>
         <primitive attach="map" object={texture} />
@@ -55,7 +54,7 @@ function Text({ children, position, opacity, color = 'white', fontSize = 410 }) 
   return (
     <a.sprite scale={[scale, scale, 1]} position={position}>
       <a.spriteMaterial attach="material" transparent opacity={opacity}>
-        <canvasTexture attach="map" image={canvas} premultiplyAlpha onUpdate={s => (s.needsUpdate = true)} />
+        <canvasTexture attach="map" image={canvas} premultiplyAlpha onUpdate={(s) => (s.needsUpdate = true)} />
       </a.spriteMaterial>
     </a.sprite>
   )
@@ -85,7 +84,7 @@ function Stars({ position }) {
   const [geo, mat, coords] = useMemo(() => {
     const geo = new THREE.SphereBufferGeometry(1, 10, 10)
     const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color('peachpuff'), transparent: true })
-    const coords = new Array(1000).fill().map(i => [Math.random() * 800 - 400, Math.random() * 800 - 400, Math.random() * 800 - 400])
+    const coords = new Array(1000).fill().map((i) => [Math.random() * 800 - 400, Math.random() * 800 - 400, Math.random() * 800 - 400])
     return [geo, mat, coords]
   }, [])
   return (
@@ -138,12 +137,12 @@ function Scene({ top, mouse }) {
       <a.spotLight intensity={1.2} color="white" position={mouse.interpolate((x, y) => [x / 100, -y / 100, 6.5])} />
       <Effects factor={top.interpolate([0, 150], [1, 0])} />
       <Background color={top.interpolate([0, scrollMax * 0.25, scrollMax * 0.8, scrollMax], ['#27282F', '#247BA0', '#70C1B3', '#f8f3f1'])} />
-      <Stars position={top.interpolate(top => [0, -1 + top / 20, 0])} />
+      <Stars position={top.interpolate((top) => [0, -1 + top / 20, 0])} />
       <Images top={top} mouse={mouse} scrollMax={scrollMax} />
-      <Text opacity={top.interpolate([0, 100], [1, 0])} position={top.interpolate(top => [0, -1 + top / 200, 0])} fontSize={100}>
+      <Text opacity={top.interpolate([0, 100], [1, 0])} position={top.interpolate((top) => [0, -1 + top / 200, 0])} fontSize={100}>
         Stalk Your Stock
       </Text>
-      <Text position={top.interpolate(top => [0, -20 + ((top * 10) / scrollMax) * 2, 0])} color="black" fontSize={150}>
+      <Text position={top.interpolate((top) => [0, -20 + ((top * 10) / scrollMax) * 2, 0])} color="black" fontSize={150}>
         Welcome
       </Text>
     </>
@@ -151,19 +150,19 @@ function Scene({ top, mouse }) {
 }
 
 const Home = () => {
-    const [{ top, mouse }, set] = useSpring(() => ({ top: 0, mouse: [0, 0] }))
-    const onMouseMove = useCallback(({ clientX: x, clientY: y }) => set({ mouse: [x - window.innerWidth / 2, y - window.innerHeight / 2] }), [])
-    const onScroll = useCallback(e => set({ top: e.target.scrollTop }), [])
-    return (
-      <>
-        <Canvas className="canvas">
-          <Scene top={top} mouse={mouse} />
-        </Canvas>
-        <div className="scroll-container" onScroll={onScroll} onMouseMove={onMouseMove}>
-          <div style={{ height: '525vh' }} />
-        </div>
-      </>
-    )
+  const [{ top, mouse }, set] = useSpring(() => ({ top: 0, mouse: [0, 0] }))
+  const onMouseMove = useCallback(({ clientX: x, clientY: y }) => set({ mouse: [x - window.innerWidth / 2, y - window.innerHeight / 2] }), [])
+  const onScroll = useCallback((e) => set({ top: e.target.scrollTop }), [])
+  return (
+    <>
+      <Canvas className="canvas">
+        <Scene top={top} mouse={mouse} />
+      </Canvas>
+      <div className="scroll-container" onScroll={onScroll} onMouseMove={onMouseMove}>
+        <div style={{ height: '525vh' }} />
+      </div>
+    </>
+  )
 }
 
 export default Home

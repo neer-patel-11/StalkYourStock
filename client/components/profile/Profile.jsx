@@ -13,18 +13,26 @@ const Profile = () => {
 
   return (
     <div className="p-4 md:p-8 lg:p-16 h-screen bg-black">
-      {/* <div className=" mt-8 md:mt-24 bg-gray-800 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-80 border border-gray-100 p-10 shadow-[0_0px_25px_rgba(8,_112,_184,_0.7)] md:p-8">
+      <div className=" mt-8 md:mt-24 bg-gray-800 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-80 border border-gray-100 p-10 shadow-[0_0px_25px_rgba(8,_112,_184,_0.7)] md:p-8">
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div className="order-2 md:order-1 text-center md:mt-4 mt-10 ">
             <div>
-              <h1 className="text-4xl font-medium text-white md:mt-0 mt-[100px]">{userData.fname}</h1>
-              <p className="font-light text-white mt-3">{userData.email}</p>
+              <h1 className="text-4xl font-medium text-white md:mt-0 mt-[100px]">
+                {userData.fname} {userData.lname}
+              </h1>
+              <p className="font-light text-white mt-3">{userData.address}</p>
             </div>
           </div>
-          <div className="relative ">
-            <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-              <img src="../../public/images/crop1.jpg" className="rounded-3xl shadow-2xl" alt="" /> 
+          {/* <div className="order-2 md:order-1 text-center md:mt-4 mt-10 ">
+            <div>
+              <h1 className="text-4xl font-medium text-white md:mt-0 mt-[100px]">
+                {userData.fname} {userData.lname}
+              </h1>
+              <p className="font-light text-white mt-3">{userData.address}</p>
             </div>
+          </div> */}
+          <div className="relative ">
+            <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500"></div>
           </div>
         </div>
         <div className="space-x-8 flex justify-between mt-6  md:justify-center">
@@ -32,7 +40,7 @@ const Profile = () => {
             Logout
           </button>
         </div>
-      </div> */}
+      </div>
     </div>
 
     // <div>
