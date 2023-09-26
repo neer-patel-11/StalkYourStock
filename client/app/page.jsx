@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 // import StockChart from "@components/StockChart";
 import Profile from "@components/profile/Profile";
 
+
 export default function Home() {
   return (
     <div>
