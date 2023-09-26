@@ -43,7 +43,7 @@ const Login = (props) => {
       .then((response) => {
         setMsg(response.data.msg);
         localStorage.setItem("email", response.data.email);
-        // console.log(response.data.msg);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
