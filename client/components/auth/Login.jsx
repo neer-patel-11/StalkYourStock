@@ -54,23 +54,16 @@ const Login = (props) => {
     props.toggleLogin();
   };
   return (
-    <MantineProvider theme={{ colorScheme: "dark" }}>
-      <Box maw={320} mx="auto">
+    <MantineProvider theme={{ colorScheme: "white" }}>
+      <Box maw={720} mx="xl">
         <Paper radius="md" p="xl" withBorder>
           <Text size="lg" weight={500}>
-            Welcome to Mantine, with
+           Login Please
           </Text>
 
-          <Group grow mb="md" mt="md"></Group>
-
-          <Divider
-            label="Or continue with email"
-            labelPosition="center"
-            my="lg"
-          />
 
           <form onClick={handleSubmit}>
-            <Stack>
+            
               <TextInput
                 required
                 label="Email"
@@ -88,19 +81,8 @@ const Login = (props) => {
                 name="password"
                 onChange={handleChange}
               />
-            </Stack>
-
-            <Group position="apart" mt="xl">
-              <Anchor
-                component="button"
-                type="button"
-                color="dimmed"
-                size="xs"
-              ></Anchor>
-              <Button type="submit" radius="xl">
-                Okay
-              </Button>
-            </Group>
+            
+            
           </form>
         </Paper>
       </Box>
