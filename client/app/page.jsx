@@ -6,11 +6,13 @@ import StockDetails from '@components/stock/StockDetails'
 // import StockChart from '@components/StockChart'
 import Profile from '@components/profile/Profile'
 import Portfolio from '@components/profile/Portfolio'
+import Transaction from '@components/profile/Transaction'
 
 export default function Home() {
   return (
     <div>
-      <Portfolio></Portfolio>
+      {/* <Portfolio></Portfolio> */}
+      <Transaction></Transaction>
     </div>
   )
 }

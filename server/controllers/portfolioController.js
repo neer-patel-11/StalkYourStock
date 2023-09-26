@@ -30,6 +30,7 @@ const addToPortfolio = async (req, res) => {
 
 const getPortfolio = async (req, res) => {
   try {
+    console.log("HeyPort");
     let email = req.query.email;
     const user = await UserSchema.findOne({ email: email });
 

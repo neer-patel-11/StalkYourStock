@@ -69,4 +69,21 @@ const addTransaction = async (req, res) => {
   //   console.log("In Port");
 };
 
-module.exports = { addTransaction: addTransaction };
+const getTransaction = async (req, res) => {
+  try {
+    let email = req.query.email;
+    const user = await UserSchema.findOne({ email: email });
+
+    const transaction = await TransactionSchema.find({ user: user._id });
+    console.log(transaction);
+    res.json({ transaction: transaction });
+  } catch (e) {
+    console.log(e);
+  }
+  //   console.log("In Port");
+};
+
+module.exports = {
+  addTransaction: addTransaction,
+  getTransaction: getTransaction,
+};
