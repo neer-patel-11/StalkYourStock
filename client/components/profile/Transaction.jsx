@@ -10,23 +10,24 @@ const Transaction = () => {
     })
   }, [])
   return (
-    <div>
+    <div class="bg-gray-800 mt-4 text-center mx-20 p-4 rounded-lg shadow-lg text-white">
+      <h2 class="text-xl font-semibold mb-4">Transaction</h2>
       {transactions.map((transaction, index) => {
         return (
-          <div key={index}>
-            <p>{transaction.stockName}</p>
+          <div key={index} class="mb-4">
+            <p class="font-light text-white">{transaction.stockName}</p>
             {transaction.isBuy && (
-              <p>
-                Bought {transaction.quantity} share of price {transaction.price}
+              <p class="font-light text-white">
+                Bought {transaction.quantity} share at price {transaction.price} INR
               </p>
             )}
             {!transaction.isBuy && (
-              <p>
-                Sold {transaction.quantity} share of price {transaction.price}
+              <p class="font-light text-white">
+                Sold {transaction.quantity} share at price {transaction.price} INR
               </p>
             )}
-            <p>{transaction.time}</p>
-            <hr />
+            <p class="font-light text-white">Time: {transaction.time}</p>
+            <hr class="border-white" />
           </div>
         )
       })}

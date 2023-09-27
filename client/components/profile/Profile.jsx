@@ -20,9 +20,34 @@ const Profile = () => {
               <h1 className="text-4xl font-medium text-white md:mt-0 mt-[100px]">
                 {userData.fname} {userData.lname}
               </h1>
-              <p className="font-light text-white mt-3">{userData.address}</p>
+              <div class="flex justify-center">
+                <div class="text-right mr-4">
+                  <p class="font-light text-white mt-3">Address:</p>
+                  <p class="font-light text-white mt-3">Email:</p>
+                  <p class="font-light text-white mt-3">Phone No:</p>
+                  <p class="font-light text-white mt-3">City:</p>
+                  <p class="font-light text-white mt-3">State:</p>
+                  <p class="font-light text-white mt-3">Country:</p>
+                  <p class="font-light text-white mt-3">Pincode:</p>
+                </div>
+                <div class="text-left">
+                  <p class="font-light text-white mt-3">{userData.address}</p>
+                  <p class="font-light text-white mt-3">{userData.email}</p>
+                  <p class="font-light text-white mt-3">{userData.phone}</p>
+                  <p class="font-light text-white mt-3">{userData.city}</p>
+                  <p class="font-light text-white mt-3">{userData.state}</p>
+                  <p class="font-light text-white mt-3">{userData.country}</p>
+                  <p class="font-light text-white mt-3">{userData.pincode}</p>
+                </div>
+              </div>
             </div>
           </div>
+          <div className="relative">
+            <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+              <img src="/images/crop1.jpg" className="rounded-full object-cover h-full w-full" alt="" />
+            </div>
+          </div>
+
           {/* <div className="order-2 md:order-1 text-center md:mt-4 mt-10 ">
             <div>
               <h1 className="text-4xl font-medium text-white md:mt-0 mt-[100px]">
@@ -31,9 +56,6 @@ const Profile = () => {
               <p className="font-light text-white mt-3">{userData.address}</p>
             </div>
           </div> */}
-          <div className="relative ">
-            <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500"></div>
-          </div>
         </div>
         <div className="space-x-8 flex justify-between mt-6  md:justify-center">
           <button className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5 text-md">
@@ -44,15 +66,7 @@ const Profile = () => {
     </div>
 
     // <div>
-    //   <p>{userData.fname}</p>
-    //   <p>{userData.lname}</p>
-    //   <p>{userData.email}</p>
-    //   <p>{userData.phone}</p>
-    //   <p>{userData.city}</p>
-    //   <p>{userData.state}</p>
-    //   <p>{userData.country}</p>
-    //   <p>{userData.pincode}</p>
-    //   <p>{userData.address}</p>
+
     // </div>
   )
 }

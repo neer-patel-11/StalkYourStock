@@ -65,7 +65,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     maxlength: 260,
   },
-
+  credit: {
+    type: Number,
+    default: 20000,
+    min: 0,
+  },
   transaction: [
     {
       type: mongoose.Schema.Types.ObjectId,

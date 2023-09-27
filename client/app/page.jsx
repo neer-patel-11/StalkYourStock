@@ -7,12 +7,16 @@ import StockDetails from '@components/stock/StockDetails'
 import Profile from '@components/profile/Profile'
 import Portfolio from '@components/profile/Portfolio'
 import Transaction from '@components/profile/Transaction'
+import Nav from './Nav'
 
 export default function Home() {
   return (
     <div>
+      <Nav></Nav>
+      {/* <Profile></Profile> */}
       {/* <Portfolio></Portfolio> */}
-      <Transaction></Transaction>
+      {/* <Transaction></Transaction> */}
+      {/* <StockDetails></StockDetails> */}
     </div>
   )
 }

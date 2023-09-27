@@ -34,7 +34,7 @@ const getPortfolio = async (req, res) => {
     let email = req.query.email;
     const user = await UserSchema.findOne({ email: email });
 
-    const portfolio = await PortfolioSchema.findOne({ user: user._id });
+    const portfolio = await PortfolioSchema.find({ user: user._id });
     console.log(portfolio);
     res.json({ portfolio: portfolio });
   } catch (e) {

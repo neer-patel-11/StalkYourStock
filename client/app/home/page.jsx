@@ -7,6 +7,7 @@ import { extend as applyThree, Canvas, useFrame, useThree } from 'react-three-fi
 import { apply as applySpring, useSpring, a, interpolate } from 'react-spring/three'
 import data from './data'
 import './styles.css'
+import Nav from '../Nav'
 
 // Import and register postprocessing classes as three-native-elements for both react-three-fiber & react-spring
 // They'll be available as native elements <effectComposer /> from then on ...
@@ -155,6 +156,8 @@ const Home = () => {
   const onScroll = useCallback((e) => set({ top: e.target.scrollTop }), [])
   return (
     <>
+      <Nav></Nav>
+
       <Canvas className="canvas">
         <Scene top={top} mouse={mouse} />
       </Canvas>

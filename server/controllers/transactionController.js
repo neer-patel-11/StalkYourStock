@@ -26,7 +26,6 @@ const addTransaction = async (req, res) => {
       user: userData._id,
     });
     console.log(transaction);
-    let TransactionData = await transaction.save();
 
     const portfolio = await PortfolioSchema.findOne({
       user: userData._id,
@@ -34,31 +33,53 @@ const addTransaction = async (req, res) => {
     });
     if (portfolio) {
       if (type == "Buy") {
+        if (Number(currentPrice) * Number(count) > userData.credit) {
+          res.send({ msg: "Insufficient balance" });
+        }
+
         let buyings =
           Number(portfolio.currentBuyings) +
           Number(currentPrice) * Number(count);
         portfolio.currentBuyings = buyings;
         let quantity = Number(count) + Number(portfolio.currentQuantity);
         portfolio.currentQuantity = quantity;
+        userData.credit -= Number(currentPrice) * Number(count);
       } else {
+        if (Number(count) > portfolio.currentQuantity) {
+          res.send({ msg: "Insufficient Shares to sell" });
+        }
+
         let buyings =
           Number(portfolio.currentBuyings) -
           Number(currentPrice) * Number(count);
         portfolio.currentBuyings = buyings;
         let quantity = Number(portfolio.currentQuantity) - Number(count);
         portfolio.currentQuantity = quantity;
+        userData.credit += Number(currentPrice) * Number(count);
       }
 
       portfolio.save();
+      // userData.save();
     } else {
-      let portfolio = new PortfolioSchema({
-        stockName: name,
-        currentBuyings: currentPrice * count,
-        currentQuantity: count,
-        user: userData._id,
-      });
-      portfolio.save();
+      if (type == "Buy") {
+        if (Number(currentPrice) * Number(count) > userData.credit) {
+          res.send({ msg: "Insufficient balance" });
+        }
+        let portfolio = new PortfolioSchema({
+          stockName: name,
+          currentBuyings: currentPrice * count,
+          currentQuantity: count,
+          user: userData._id,
+        });
+        userData.credit -= Number(currentPrice) * Number(count);
+
+        // userData.save();
+        portfolio.save();
+      } else {
+        res.send("Insufficient shares to sell");
+      }
     }
+    let TransactionData = await transaction.save();
 
     userData.transaction.push(TransactionData);
     userData.save();

@@ -2,10 +2,10 @@ const axios = require("axios");
 
 const chart = async (req, res) => {
   let stockSymbol = req.query.name;
-
   let data = await axios.get(
     `https://query1.finance.yahoo.com/v8/finance/chart/${stockSymbol}.ns?metrics=close?&interval=1d&range=1y`
   );
+  console.log(stockSymbol);
 
   let time = data.data.chart.result[0].timestamp;
   let price = data.data.chart.result[0].indicators.quote[0].close;

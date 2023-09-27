@@ -1,93 +1,66 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useToggle, upperFirst } from "@mantine/hooks";
-import {
-  TextInput,
-  PasswordInput,
-  Text,
-  Paper,
-  Group,
-  PaperProps,
-  Button,
-  Divider,
-  Checkbox,
-  Anchor,
-  Stack,
-  MantineProvider,
-  Box,
-} from "@mantine/core";
+'use client'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useToggle, upperFirst } from '@mantine/hooks'
+import { TextInput, PasswordInput, Text, Paper, Group, PaperProps, Button, Divider, Checkbox, Anchor, Stack, MantineProvider, Box } from '@mantine/core'
 // import "@styles/Login.css";
 
 const Login = (props) => {
-  const [msg, setMsg] = useState([]);
+  const [msg, setMsg] = useState([])
 
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+    email: '',
+    password: ''
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
-    }));
-  };
+      [name]: value
+    }))
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const reqData = formData;
+    e.preventDefault()
+    const reqData = formData
     axios
-      .post("http://localhost:8080/user/login", reqData)
+      .post('http://localhost:8080/user/login', reqData)
       .then((response) => {
-        setMsg(response.data.msg);
-        localStorage.setItem("email", response.data.email);
-        console.log(response.data);
+        setMsg(response.data.msg)
+        localStorage.setItem('email', response.data.email)
+        console.log(response.data)
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
+        console.error('Error fetching data:', error)
+      })
+  }
 
   const handleAuth = () => {
-    props.toggleLogin();
-  };
+    props.toggleLogin()
+  }
   return (
-    <MantineProvider theme={{ colorScheme: "white" }}>
-      <Box maw={720} mx="xl">
+    <MantineProvider theme={{ colorScheme: 'white' }}>
+      <Box maw={720} mx="xl" className="w-96 py-16">
         <Paper radius="md" p="xl" withBorder>
-          <Text size="lg" weight={500}>
-           Login Please
+          <Text size="lg" weight={500} className="mb-5">
+            Login Please
           </Text>
 
-
           <form onClick={handleSubmit}>
-            
-              <TextInput
-                required
-                label="Email"
-                placeholder="hello@mantine.dev"
-                radius="md"
-                name="email"
-                onChange={handleChange}
-              />
+            <TextInput required label="Email" placeholder="hello@stalkyourstock.com" radius="md" name="email" onChange={handleChange} />
 
-              <PasswordInput
-                required
-                label="Password"
-                placeholder="Your password"
-                radius="md"
-                name="password"
-                onChange={handleChange}
-              />
-            
-            
+            <PasswordInput required label="Password" placeholder="Your password" radius="md" name="password" onChange={handleChange} />
+            <div class="mt-4 flex justify-end">
+              <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+                Submit
+              </button>
+            </div>
           </form>
         </Paper>
       </Box>
     </MantineProvider>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

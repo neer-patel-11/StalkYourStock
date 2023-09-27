@@ -1,79 +1,65 @@
-import React from "react";
-import Chart from "chart.js/auto";
-import { Line } from "react-chartjs-2";
-import moment from "moment";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-} from "chart.js";
+import React from 'react'
+import Chart from 'chart.js/auto'
+import { Line } from 'react-chartjs-2'
+import moment from 'moment'
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip } from 'chart.js'
 //     import { Bar } from 'react-chartjs-2';
-import ZoomPlugin from "chartjs-plugin-zoom";
+import ZoomPlugin from 'chartjs-plugin-zoom'
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  ZoomPlugin
-);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, ZoomPlugin)
 
 export const options = {
   responsive: true,
   plugins: {
     title: {
       display: true,
-      text: "Stock price per day",
+      text: 'Stock price per day'
     },
     plugins: {
       pan: {
         enabled: true,
-        mode: "x",
+        mode: 'x'
       },
       limits: {
-        x: { min: 5, max: 7 },
+        x: { min: 5, max: 7 }
       },
       zoom: {
         pan: {
-          enabled: true,
-        },
-      },
-    },
-  },
-};
+          enabled: true
+        }
+      }
+    }
+  }
+}
 
 const GetChart = (props) => {
-  let labels = props.data;
+  let labels = props.data
   labels = labels.map((items) => {
-    return moment(items.date).utc().format("YYYY-MM-DD");
-  });
+    return moment(items.date).utc().format('YYYY-MM-DD')
+  })
 
-  let prices = props.data;
+  let prices = props.data
   prices = prices.map((items) => {
-    return items.price;
-  });
+    return items.price
+  })
 
   const data = {
     labels: labels,
     datasets: [
       {
-        label: "Price",
-        backgroundColor: "#81c995",
-        borderColor: "#81c995",
-        data: prices,
-      },
-    ],
-  };
+        label: 'Price',
+        backgroundColor: '#81c995',
+        borderColor: '#81c995',
+        data: prices
+      }
+    ]
+  }
 
   return (
-    <div className="bg-black">
+    <div className="bg-white h-screen">
       <Line options={options} data={data} />
     </div>
-  );
-};
+  )
+}
 
-export default GetChart;
+export default GetChart
