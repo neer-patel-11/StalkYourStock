@@ -48,7 +48,10 @@ const StockDetails = () => {
     <>
       <div className="my-15 flex items-center flex-col">
         <div class="flex justify-center items-center flex-col">
-          <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex justify-center items-center flex-col" onSubmit={getStockDetails}>
+          <form
+            class="bg-gray-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100
+ px-8 pt-6 pb-8 mb-4 flex justify-center items-center flex-col"
+            onSubmit={getStockDetails}>
             <div class="mb-4 text-center">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="stockSymbol">
                 Company Name

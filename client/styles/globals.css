@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: sys;
+    src: url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+}
+
 @layer base {
-    body {
-        /* @apply bg-slate-500 */
+    * {
+        @apply font-sys;
     }
 }

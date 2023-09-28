@@ -20,6 +20,7 @@
     "fs": "^0.0.1-security",
     "moment": "^2.29.4",
     "next": "13.4.19",
+    "next-google-fonts": "^2.2.0",
     "postcss": "8.4.28",
     "prop-types": "^15.6.2",
     "protobufjs": "^7.2.5",
@@ -35,8 +36,10 @@
     "react-sizeme": "^2.5.2",
     "react-spring": "^8.0.19",
     "react-three-fiber": "^4.0.8",
+    "react-tsparticles": "^2.12.2",
     "react-websocket": "^2.1.0",
     "tailwindcss": "3.3.3",
-    "three": "^0.102.1"
+    "three": "^0.102.1",
+    "tsparticles": "^2.12.0"
   }
 }

@@ -131,9 +131,9 @@ const StockTextDetails = (props) => {
 
   return (
     <>
-      <div class="bg-white rounded-lg shadow-lg p-6 text-center">
-        <h1 class="text-2xl font-semibold mb-4">Details</h1>
-        <ul className="grid grid-cols-2 text-left gap-x-20 gap-y-2">
+      <div class="bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100  shadow-lg p-6 text-center">
+        <h1 class="text-2xl font-semibold font-sys mb-4 text-white">W{props.name}</h1>
+        <ul className="grid grid-cols-2 text-left text-white gap-x-20 gap-y-2">
           <li class="mb-2">Max Age: {details.maxAge}</li>
           <li class="mb-2">Current Price: {details.currentPrice.raw}</li>
           <li class="mb-2">Target High Price: {details.targetHighPrice.raw}</li>
