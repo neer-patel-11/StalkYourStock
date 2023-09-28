@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import StockChart from './StockChart'
+import { Toaster, toast } from 'react-hot-toast'
 
 const StockTextDetails = (props) => {
   const [details, setDetails] = useState({
@@ -125,14 +126,21 @@ const StockTextDetails = (props) => {
           localStorage.getItem('email')
       )
       .then((response) => {
-        console.log(response.data.PortfolioData)
+        if (response.data.msg) {
+          toast.error(response.data.msg)
+        } else {
+          toast.success('Transaction Successful!')
+        }
       })
   }
 
   return (
     <>
+      <div>
+        <Toaster />
+      </div>
       <div class="bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100  shadow-lg p-6 text-center">
-        <h1 class="text-2xl font-semibold font-sys mb-4 text-white">W{props.name}</h1>
+        <h1 class="text-2xl font-semibold font-sys mb-4 text-white">{props.name}</h1>
         <ul className="grid grid-cols-2 text-left text-white gap-x-20 gap-y-2">
           <li class="mb-2">Max Age: {details.maxAge}</li>
           <li class="mb-2">Current Price: {details.currentPrice.raw}</li>

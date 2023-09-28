@@ -1,44 +1,44 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import protobuf from "protobufjs";
-import axios from "axios";
+import React, { useState } from 'react'
+import { useEffect } from 'react'
+import protobuf from 'protobufjs'
+import axios from 'axios'
 
 const LiveStock = (props) => {
   useEffect(() => {
-    const ws = new WebSocket("wss://streamer.finance.yahoo.com");
+    const ws = new WebSocket('wss://streamer.finance.yahoo.com')
 
-    protobuf.load("YPricingData.proto", (err, root) => {
+    protobuf.load('YPricingData.proto', (err, root) => {
       if (err) {
-        return console.log("Hey Neer");
+        return console.log('Hey Neer')
       }
 
-      const name = props.name + ".NS";
-      console.log(name);
+      const name = props.name + '.NS'
+      console.log(name)
 
-      const Yaticker = root.lookupType("yaticker");
+      const Yaticker = root.lookupType('yaticker')
       ws.onopen = function open() {
-        console.log("connected");
+        console.log('connected')
         ws.send(
           JSON.stringify({
-            subscribe: [name],
+            subscribe: [name]
           })
-        );
-      };
+        )
+      }
 
       ws.onclose = function close() {
-        console.log("disconnected");
-      };
+        console.log('disconnected')
+      }
 
       ws.onmessage = function incoming(data) {
-        console.log("comming message");
-        console.log(Yaticker.decode(new Buffer(data.data, "base64")));
+        console.log('comming message')
+        console.log(Yaticker.decode(new Buffer(data.data, 'base64')))
 
         // console.log(data.data);
         // console.log(Yaticker.decode(new Buffer(data.data, "base64")));
-        if (props.flag) ws.close();
-      };
-    });
-  });
+        if (props.flag) ws.close()
+      }
+    })
+  })
 
   return (
     <div>
@@ -47,7 +47,7 @@ const LiveStock = (props) => {
       )} */}
       {/* {!showDropdown && <button onClick={closeLiveStock}>Close</button>} */}
     </div>
-  );
-};
+  )
+}
 
-export default LiveStock;
+export default LiveStock

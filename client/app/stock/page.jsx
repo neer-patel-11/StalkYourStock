@@ -8,6 +8,7 @@ export default function Home() {
   return (
     <>
       <PaticlesBackground></PaticlesBackground>
+      
       <Nav></Nav>
 
       <StockDetails />

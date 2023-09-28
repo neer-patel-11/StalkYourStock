@@ -34,49 +34,57 @@ const addTransaction = async (req, res) => {
     if (portfolio) {
       if (type == "Buy") {
         if (Number(currentPrice) * Number(count) > userData.credit) {
+          console.log("insufficient Balance");
           res.send({ msg: "Insufficient balance" });
+          return;
+        } else {
+          let buyings =
+            Number(portfolio.currentBuyings) +
+            Number(currentPrice) * Number(count);
+          portfolio.currentBuyings = buyings;
+          let quantity = Number(count) + Number(portfolio.currentQuantity);
+          portfolio.currentQuantity = quantity;
+          userData.credit -= Number(currentPrice) * Number(count);
+          portfolio.save();
         }
-
-        let buyings =
-          Number(portfolio.currentBuyings) +
-          Number(currentPrice) * Number(count);
-        portfolio.currentBuyings = buyings;
-        let quantity = Number(count) + Number(portfolio.currentQuantity);
-        portfolio.currentQuantity = quantity;
-        userData.credit -= Number(currentPrice) * Number(count);
       } else {
         if (Number(count) > portfolio.currentQuantity) {
-          res.send({ msg: "Insufficient Shares to sell" });
+          await res.send({ msg: "Insufficient Shares to sell" });
+          return;
+        } else {
+          let buyings =
+            Number(portfolio.currentBuyings) -
+            Number(currentPrice) * Number(count);
+          portfolio.currentBuyings = buyings;
+          let quantity = Number(portfolio.currentQuantity) - Number(count);
+          portfolio.currentQuantity = quantity;
+          userData.credit += Number(currentPrice) * Number(count);
+          portfolio.save();
         }
-
-        let buyings =
-          Number(portfolio.currentBuyings) -
-          Number(currentPrice) * Number(count);
-        portfolio.currentBuyings = buyings;
-        let quantity = Number(portfolio.currentQuantity) - Number(count);
-        portfolio.currentQuantity = quantity;
-        userData.credit += Number(currentPrice) * Number(count);
       }
 
-      portfolio.save();
       // userData.save();
     } else {
       if (type == "Buy") {
         if (Number(currentPrice) * Number(count) > userData.credit) {
-          res.send({ msg: "Insufficient balance" });
-        }
-        let portfolio = new PortfolioSchema({
-          stockName: name,
-          currentBuyings: currentPrice * count,
-          currentQuantity: count,
-          user: userData._id,
-        });
-        userData.credit -= Number(currentPrice) * Number(count);
+          console.log("insufficenet balance");
+          await res.send({ msg: "Insufficient balance" });
+          return;
+        } else {
+          let portfolio = new PortfolioSchema({
+            stockName: name,
+            currentBuyings: currentPrice * count,
+            currentQuantity: count,
+            user: userData._id,
+          });
+          userData.credit -= Number(currentPrice) * Number(count);
 
-        // userData.save();
-        portfolio.save();
+          // userData.save();
+          portfolio.save();
+        }
       } else {
-        res.send("Insufficient shares to sell");
+        res.send({ msg: "Insufficient shares to sell" });
+        return;
       }
     }
     let TransactionData = await transaction.save();

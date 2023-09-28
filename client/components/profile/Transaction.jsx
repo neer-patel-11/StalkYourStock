@@ -10,24 +10,19 @@ const Transaction = () => {
     })
   }, [])
   return (
-    <div class="bg-gray-800 mt-4 text-center mx-20 p-4 rounded-lg shadow-lg text-white">
-      <h2 class="text-xl font-semibold mb-4">Transaction</h2>
+    <div class=" bg-black rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 mt-24 text-center mx-20 p-4 shadow-lg text-white">
+      <h2 class="text-xl font-semibold mb-4">Transactions</h2>
       {transactions.map((transaction, index) => {
         return (
-          <div key={index} class="mb-4">
-            <p class="font-light text-white">{transaction.stockName}</p>
-            {transaction.isBuy && (
-              <p class="font-light text-white">
-                Bought {transaction.quantity} share at price {transaction.price} INR
-              </p>
-            )}
-            {!transaction.isBuy && (
-              <p class="font-light text-white">
-                Sold {transaction.quantity} share at price {transaction.price} INR
-              </p>
-            )}
-            <p class="font-light text-white">Time: {transaction.time}</p>
-            <hr class="border-white" />
+          <div key={index} class="mb-4 bg-gray-800 p-4 rounded shadow-md">
+            <p class="text-xl font-semibold">{transaction.stockName}</p>
+            <p class={`text-white py-1 w-fit mx-auto my-0  px-2 rounded ${transaction.isBuy ? 'bg-green-500' : 'bg-red-500'}`}>
+              {transaction.isBuy ? `Bought ${transaction.quantity} share` : `Sold ${transaction.quantity} share`}
+            </p>
+            <div class="mt-2">
+              <p class="text-white">Price: {transaction.price} INR</p>
+              <p class="text-white">Time: {new Date(transaction.time).toLocaleString()}</p>
+            </div>
           </div>
         )
       })}

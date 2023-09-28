@@ -56,9 +56,11 @@ const GetChart = (props) => {
   }
 
   return (
-    <div className="bg-white h-screen">
-      <Line options={options} data={data} />
-    </div>
+    <>
+      <div className="bg-[#17181C] h-screen">
+        <Line options={options} data={data} />
+      </div>
+    </>
   )
 }
 

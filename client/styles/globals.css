@@ -8,7 +8,7 @@
 }
 
 @layer base {
-    * {
+    /* * {
         @apply font-sys;
-    }
+    } */
 }

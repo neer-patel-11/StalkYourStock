@@ -67,7 +67,7 @@ const userSchema = new mongoose.Schema({
   },
   credit: {
     type: Number,
-    default: 20000,
+    default: 50000,
     min: 0,
   },
   transaction: [
