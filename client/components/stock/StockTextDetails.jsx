@@ -128,8 +128,10 @@ const StockTextDetails = (props) => {
       .then((response) => {
         if (response.data.msg) {
           toast.error(response.data.msg)
+          document.querySelector('#stockNo').value = ''
         } else {
           toast.success('Transaction Successful!')
+          document.querySelector('#stockNo').value = ''
         }
       })
   }
@@ -139,45 +141,45 @@ const StockTextDetails = (props) => {
       <div>
         <Toaster />
       </div>
-      <div class="bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100  shadow-lg p-6 text-center">
-        <h1 class="text-2xl font-semibold font-sys mb-4 text-white">{props.name}</h1>
+      <div className="bg-gray-900 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100  shadow-lg p-6 text-center">
+        <h1 className="text-2xl font-semibold font-sys mb-4 text-white">{props.name}</h1>
         <ul className="grid grid-cols-2 text-left text-white gap-x-20 gap-y-2">
-          <li class="mb-2">Max Age: {details.maxAge}</li>
-          <li class="mb-2">Current Price: {details.currentPrice.raw}</li>
-          <li class="mb-2">Target High Price: {details.targetHighPrice.raw}</li>
-          <li class="mb-2">Target Low Price: {details.targetLowPrice.raw}</li>
-          <li class="mb-2">Target Mean Price: {details.targetMeanPrice.raw}</li>
-          <li class="mb-2">Target Median Price: {details.targetMedianPrice.raw}</li>
-          <li class="mb-2">Recommendation Mean: {details.recommendationMean.raw}</li>
-          <li class="mb-2">Recommendation Key: {details.recommendationKey}</li>
-          <li class="mb-2">Number of Analyst Opinions: {details.numberOfAnalystOpinions.raw}</li>
-          <li class="mb-2">Total Cash: {details.totalCash.raw}</li>
-          <li class="mb-2">Total Cash Per Share: {details.totalCashPerShare.raw}</li>
-          <li class="mb-2">EBITDA: {details.ebitda.raw}</li>
-          <li class="mb-2">Total Debt: {details.totalDebt.raw}</li>
-          <li class="mb-2">Total Revenue: {details.totalRevenue.raw}</li>
-          <li class="mb-2">Debt to Equity: {details.debtToEquity.raw}</li>
-          <li class="mb-2">Revenue Per Share: {details.revenuePerShare.raw}</li>
-          <li class="mb-2">Gross Profits: {details.grossProfits.raw}</li>
-          <li class="mb-2">Earnings Growth: {details.earningsGrowth.raw}</li>
-          <li class="mb-2">Revenue Growth: {details.revenueGrowth.raw}</li>
-          <li class="mb-2">Gross Margins: {details.grossMargins.raw}</li>
-          <li class="mb-2">EBITDA Margins: {details.ebitdaMargins.raw}</li>
-          <li class="mb-2">Operating Margins: {details.operatingMargins.raw}</li>
-          <li class="mb-2">Profit Margins: {details.profitMargins.raw}</li>
-          <li class="mb-2">Financial Currency: {details.financialCurrency}</li>
+          <li className="mb-2">Max Age: {details.maxAge}</li>
+          <li className="mb-2">Current Price: {details.currentPrice.raw}</li>
+          <li className="mb-2">Target High Price: {details.targetHighPrice.raw}</li>
+          <li className="mb-2">Target Low Price: {details.targetLowPrice.raw}</li>
+          <li className="mb-2">Target Mean Price: {details.targetMeanPrice.raw}</li>
+          <li className="mb-2">Target Median Price: {details.targetMedianPrice.raw}</li>
+          <li className="mb-2">Recommendation Mean: {details.recommendationMean.raw}</li>
+          <li className="mb-2">Recommendation Key: {details.recommendationKey}</li>
+          <li className="mb-2">Number of Analyst Opinions: {details.numberOfAnalystOpinions.raw}</li>
+          <li className="mb-2">Total Cash: {details.totalCash.raw}</li>
+          <li className="mb-2">Total Cash Per Share: {details.totalCashPerShare.raw}</li>
+          <li className="mb-2">EBITDA: {details.ebitda.raw}</li>
+          <li className="mb-2">Total Debt: {details.totalDebt.raw}</li>
+          <li className="mb-2">Total Revenue: {details.totalRevenue.raw}</li>
+          <li className="mb-2">Debt to Equity: {details.debtToEquity.raw}</li>
+          <li className="mb-2">Revenue Per Share: {details.revenuePerShare.raw}</li>
+          <li className="mb-2">Gross Profits: {details.grossProfits.raw}</li>
+          <li className="mb-2">Earnings Growth: {details.earningsGrowth.raw}</li>
+          <li className="mb-2">Revenue Growth: {details.revenueGrowth.raw}</li>
+          <li className="mb-2">Gross Margins: {details.grossMargins.raw}</li>
+          <li className="mb-2">EBITDA Margins: {details.ebitdaMargins.raw}</li>
+          <li className="mb-2">Operating Margins: {details.operatingMargins.raw}</li>
+          <li className="mb-2">Profit Margins: {details.profitMargins.raw}</li>
+          <li className="mb-2">Financial Currency: {details.financialCurrency}</li>
         </ul>
       </div>
-      <div class="mt-16 mb-5 flex items-center space-x-4">
-        <input class="border rounded px-2 py-1" type="number" id="stockNo" min="1" />
+      <div className="mt-16 mb-5 flex items-center space-x-4">
+        <input className="border rounded px-2 py-1" type="number" id="stockNo" min="1" />
         <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           onClick={buyStock}
           value="Buy">
           Buy
         </button>
         <button
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           onClick={buyStock}
           value="Sell">
           Sell
@@ -188,3 +190,5 @@ const StockTextDetails = (props) => {
 }
 
 export default StockTextDetails
+
+

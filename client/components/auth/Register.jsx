@@ -1,13 +1,14 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import '@styles/Register.css'
+// import '@styles/Register.css'
 import { TextInput, PasswordInput, Text, Paper, Group, PaperProps, Button, Divider, Checkbox, Anchor, Stack, MantineProvider, Box, Grid } from '@mantine/core'
+import toast, { Toaster } from 'react-hot-toast'
 
 const Register = (props) => {
   const [msg, setMsg] = useState([])
 
-  const initialFormData = {
+  const [state, setState] = useState({
     fname: '',
     lname: '',
     email: '',
@@ -18,31 +19,32 @@ const Register = (props) => {
     country: '',
     pincode: '',
     password: ''
-  }
-  const [formData, setFormData] = useState(initialFormData)
+  })
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData((prevData) => ({
+    setState((prevData) => ({
       ...prevData,
       [name]: value
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleOnSubmit = (e) => {
     e.preventDefault()
-    console.log(formData)
-    const reqData = formData
+    console.log(state)
+    const reqData = state
     axios
       .post('http://localhost:8080/user/register', reqData)
       .then((response) => {
         setMsg(response.data.msg)
         console.log(response.data.msg)
-        setFormData(initialFormData)
+        if (response.data.status != 404) toast.success(response.data.msg)
+        else toast.error(response.data.msg)
       })
       .catch((error) => {
         console.error('Error fetching data:', error)
       })
+    setState({ fname: '', lname: '', email: '', phone: '', address: '', city: '', state: '', country: '', pincode: '', password: '' })
   }
 
   const handleAuth = () => {
@@ -51,221 +53,27 @@ const Register = (props) => {
 
   return (
     <>
-      <MantineProvider theme={{ colorScheme: 'white' }}>
-        <Box maw={450} mx="xl">
-          <Paper radius="md" p="xl" withBorder>
-            <Text size="lg" weight={500}>
-              Sign UP
-            </Text>
+      <Toaster />
+      <div className="form-container sign-up-container">
+        <form onSubmit={handleOnSubmit}>
+          <h1>Create Account</h1>
 
-            <form onSubmit={handleSubmit}>
-              <Grid>
-                <Grid.Col span={6}>
-                  <input
-                    className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                    type="text"
-                    placeholder="First Name"
-                    name="fname"
-                    required
-                    value={formData.fname}
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                    type="text"
-                    placeholder="Last Name"
-                    name="lname"
-                    required
-                    value={formData.lname}
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    value={formData.email}
-                    required
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                    type="text"
-                    placeholder="Phone No"
-                    name="phone"
-                    required
-                    value={formData.phone}
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                    type="text"
-                    placeholder="Landmark"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    required
-                  />
-                </Grid.Col>
-                <Grid.Col span={6}>
-                  <input
-                    className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                    type="text"
-                    placeholder="City"
-                    name="city"
-                    required
-                    value={formData.city}
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                    type="text"
-                    placeholder="State"
-                    name="state"
-                    value={formData.state}
-                    required
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                    type="text"
-                    placeholder="Country"
-                    name="country"
-                    value={formData.country}
-                    required
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                    required
-                    type="text"
-                    placeholder="Pin Code"
-                    name="pincode"
-                    value={formData.pincode}
-                    onChange={handleChange}
-                  />
-                  <input
-                    className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    required
-                    value={formData.password}
-                    onChange={handleChange}
-                  />
-                </Grid.Col>
-              </Grid>
-
-              <div class="mt-4 flex justify-end">
-                <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
-                  Submit
-                </button>
-              </div>
-            </form>
-          </Paper>
-        </Box>
-      </MantineProvider>
+          <div className="grid grid-cols-2 gap-2 my-3">
+            <input type="text" name="fname" value={state.fname} onChange={handleChange} placeholder="First Name" />
+            <input type="text" name="lname" value={state.lname} onChange={handleChange} placeholder="Last Name" />
+            <input type="email" name="email" value={state.email} onChange={handleChange} placeholder="Email" />
+            <input type="text" name="phone" value={state.phone} onChange={handleChange} placeholder="Phone Number" />
+            <input type="text" name="address" value={state.address} onChange={handleChange} placeholder="Address" />
+            <input type="text" name="city" value={state.city} onChange={handleChange} placeholder="City" />
+            <input type="text" name="state" value={state.state} onChange={handleChange} placeholder="State" />
+            <input type="text" name="country" value={state.country} onChange={handleChange} placeholder="Country" />
+            <input type="text" name="pincode" value={state.pincode} onChange={handleChange} placeholder="Pin Code" />
+            <input type="password" name="password" value={state.password} onChange={handleChange} placeholder="Password" />
+          </div>
+          <button>Sign Up</button>
+        </form>
+      </div>
     </>
-    // <div className="loginContainer">
-    //   <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
-
-    //     <div className="md:w-1/3 max-w-sm">
-
-    //       <form className="grid grid-cols-2 gap-3 w-96" onSubmit={handleSubmit}>
-    // <input
-    //   className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-    //   type="text"
-    //   placeholder="First Name"
-    //   name="fname"
-    //   value={formData.fname}
-    //   onChange={handleChange}
-    // />
-    // <input
-    //   className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-    //   type="text"
-    //   placeholder="Last Name"
-    //   name="lname"
-    //   value={formData.lname}
-    //   onChange={handleChange}
-    // />
-    // <input
-    //   className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-    //   type="email"
-    //   placeholder="Email"
-    //   name="email"
-    //   value={formData.email}
-    //   onChange={handleChange}
-    // />
-    // <input
-    //   className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-    //   type="text"
-    //   placeholder="Phone No"
-    //   name="phone"
-    //   value={formData.phone}
-    //   onChange={handleChange}
-    // />
-    // <input
-    //   className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-    //   type="text"
-    //   placeholder="Landmark"
-    //   name="address"
-    //   value={formData.address}
-    //   onChange={handleChange}
-    // />
-    // <input
-    //   className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-    //   type="text"
-    //   placeholder="City"
-    //   name="city"
-    //   value={formData.city}
-    //   onChange={handleChange}
-    // />
-    // <input
-    //   className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-    //   type="text"
-    //   placeholder="State"
-    //   name="state"
-    //   value={formData.state}
-    //   onChange={handleChange}
-    // />
-    // <input
-    //   className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-    //   type="text"
-    //   placeholder="Country"
-    //   name="country"
-    //   value={formData.country}
-    //   onChange={handleChange}
-    // />
-    // <input
-    //   className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-    //   type="text"
-    //   placeholder="Pin Code"
-    //   name="pincode"
-    //   value={formData.pincode}
-    //   onChange={handleChange}
-    // />
-    // <input
-    //   className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
-    //   type="password"
-    //   placeholder="Password"
-    //   name="password"
-    //   value={formData.password}
-    //   onChange={handleChange}
-    // />
-    //         <div className="text-center md:text-left">
-    // <button
-    //   className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider"
-    //   type="submit"
-    // >
-    //   Register
-    // </button>
-    //         </div>
-    //       </form>
-
-    //     </div>
-    //   </section>
-
-    // </div>
   )
 }
 

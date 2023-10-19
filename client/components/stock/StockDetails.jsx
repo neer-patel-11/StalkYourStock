@@ -47,23 +47,23 @@ const StockDetails = () => {
   return (
     <>
       <div className="my-15 flex items-center flex-col">
-        <div class="flex justify-center mt-24 items-center flex-col">
+        <div className="flex justify-center mt-24 items-center flex-col">
           <form
-            class="bg-gray-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100
+            className="bg-gray-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100
  px-8 pt-6 pb-8 mb-4 flex justify-center items-center flex-col"
             onSubmit={getStockDetails}>
-            <div class="mb-4 text-center">
-              <label class="block text-gray-700 text-sm font-bold mb-2" for="stockSymbol">
+            <div className="mb-4 text-center">
+              <label className="block text-gray-700 text-sm font-bold mb-2" for="stockSymbol">
                 Company Name
               </label>
               <select
-                class="shadow text-center appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="shadow text-center appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 name="stockSymbol"
                 id="stockSymbol"></select>
             </div>
-            <div class="flex items-center justify-between">
-              <Button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <div className="flex items-center justify-between">
+              <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                 Submit
               </Button>
             </div>
@@ -71,7 +71,7 @@ const StockDetails = () => {
 
           <Button
             id="btn"
-            class="bg-green-500 mb-4 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-green-500 mb-4 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             onClick={toggleButton}>
             See Chart
           </Button>

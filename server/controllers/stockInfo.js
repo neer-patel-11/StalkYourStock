@@ -23,19 +23,28 @@ const nameInfo = async (req, res) => {
   }
 };
 
+// let cancelTokenSource = null;
 const stockInfo = async (req, res) => {
   let stockSymbol = req.query.name;
-  // console.log(stockSymbol);
 
-  let data = await axios.get(
-    `https://query1.finance.yahoo.com/v6/finance/quoteSummary/${stockSymbol}.ns?modules=financialData`
-  );
-  // console.log(data.data.quoteSummary.result[0]);
+  if (!stockSymbol) {
+    return res.status(400).json({ error: "Stock symbol is required" });
+  }
+
   try {
-    const details = data.data.quoteSummary.result[0];
-    res.json({ details: details });
+    let data = await axios.get(
+      `https://query1.finance.yahoo.com/v6/finance/quoteSummary/${stockSymbol}.ns?modules=financialData`
+    );
+
+    if (data.status === 200) {
+      const details = data.data.quoteSummary.result[0];
+      res.json({ details: details });
+    } else {
+      res.status(data.status).json({ error: "Stock symbol not found" });
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

@@ -24,7 +24,7 @@ export default class Back extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLogin: false
+      isLogin: true
     }
 
     this.toggleLogin = this.toggleLogin.bind(this)

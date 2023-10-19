@@ -36,7 +36,7 @@ const getPortfolio = async (req, res) => {
 
     const portfolio = await PortfolioSchema.find({ user: user._id });
     console.log(portfolio);
-    res.json({ portfolio: portfolio });
+    res.json({ portfolio: portfolio, balance: user.credit });
   } catch (e) {
     console.log(e);
   }

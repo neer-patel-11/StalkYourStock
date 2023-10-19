@@ -21,7 +21,7 @@ const transactionSchema = new mongoose.Schema({
   },
   time: {
     type: Date,
-    default: moment.utc().add(5, "hours").add(30, "minutes"),
+    default: new Date().toLocaleString("en-Us", { timeZone: "Asia/Kolkata" }),
   },
   quantity: {
     type: Number,

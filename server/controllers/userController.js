@@ -38,7 +38,6 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  console.log(req.body);
   hexPassword = await securePassword(req.body.password).then();
   let user = new UserSchema({
     fname: req.body.fname,
@@ -53,12 +52,13 @@ const register = async (req, res) => {
     password: hexPassword,
   });
   console.log(user);
-  let UserData = await user.save();
-
-  if (UserData) {
-    res.json({ msg: "Data sent succesfully." });
-  } else {
-    res.json({ msg: "Data not sent ." });
+  try {
+    let UserData = await user.save();
+    if (UserData) {
+      res.json({ msg: "Registered succesfully!" });
+    }
+  } catch (e) {
+    res.json({ msg: "Register Unsuccesful!", status: 404 });
   }
 };
 
@@ -72,9 +72,33 @@ const getProfile = async (req, res) => {
   res.json({ userData: userData });
 };
 
+const updateProfile = async (req, res) => {
+  console.log("Neer");
+  const userData = req.body;
+  const currUser = await UserSchema.findOne({ email: userData.email });
+  if (currUser != null) {
+    currUser.fname = userData.fname;
+    currUser.lname = userData.lname;
+    currUser.phone = userData.phone;
+    currUser.city = userData.city;
+    currUser.state = userData.state;
+    currUser.country = userData.country;
+    currUser.pincode = userData.pincode;
+    currUser.address = userData.address;
+
+    try {
+      await currUser.save();
+      res.send({ msg: "success" });
+    } catch (e) {
+      res.send({ msg: e });
+    }
+  }
+};
+
 module.exports = {
   login: login,
   register: register,
   logout: logout,
   getProfile: getProfile,
+  updateProfile: updateProfile,
 };

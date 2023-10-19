@@ -38,9 +38,10 @@ const addTransaction = async (req, res) => {
           res.send({ msg: "Insufficient balance" });
           return;
         } else {
-          let buyings =
-            Number(portfolio.currentBuyings) +
-            Number(currentPrice) * Number(count);
+          let avg =
+            Number(portfolio.currentBuyings) /
+            (Number(portfolio.currentQuantity) * 1.0);
+          let buyings = Number(portfolio.currentBuyings) - avg * Number(count);
           portfolio.currentBuyings = buyings;
           let quantity = Number(count) + Number(portfolio.currentQuantity);
           portfolio.currentQuantity = quantity;
@@ -52,9 +53,10 @@ const addTransaction = async (req, res) => {
           await res.send({ msg: "Insufficient Shares to sell" });
           return;
         } else {
-          let buyings =
-            Number(portfolio.currentBuyings) -
-            Number(currentPrice) * Number(count);
+          let avg =
+            Number(portfolio.currentBuyings) /
+            (Number(portfolio.currentQuantity) * 1.0);
+          let buyings = Number(portfolio.currentBuyings) - avg * Number(count);
           portfolio.currentBuyings = buyings;
           let quantity = Number(portfolio.currentQuantity) - Number(count);
           portfolio.currentQuantity = quantity;
@@ -87,6 +89,10 @@ const addTransaction = async (req, res) => {
         return;
       }
     }
+    console.log("portfolio is here");
+    await PortfolioSchema.findOneAndDelete({ currentQuantity: 0 });
+    console.log("portfolio is gone");
+
     let TransactionData = await transaction.save();
 
     userData.transaction.push(TransactionData);
@@ -104,7 +110,8 @@ const getTransaction = async (req, res) => {
     const user = await UserSchema.findOne({ email: email });
 
     const transaction = await TransactionSchema.find({ user: user._id });
-    console.log(transaction);
+    transaction.reverse();
+    // console.log(transaction);
     res.json({ transaction: transaction });
   } catch (e) {
     console.log(e);

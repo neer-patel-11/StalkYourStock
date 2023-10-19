@@ -14,5 +14,7 @@ app.get("/logout", userController.logout);
 
 app.get("/profile", userController.getProfile);
 
+app.post("/updateProfile", userController.updateProfile);
+
 module.exports = app;
 // ============================

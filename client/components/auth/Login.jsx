@@ -3,33 +3,36 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useToggle, upperFirst } from '@mantine/hooks'
 import { TextInput, PasswordInput, Text, Paper, Group, PaperProps, Button, Divider, Checkbox, Anchor, Stack, MantineProvider, Box } from '@mantine/core'
+import { useRouter } from 'next/navigation'
 // import "@styles/Login.css";
+import { Toaster, toast } from 'react-hot-toast'
 
 const Login = (props) => {
-  const [msg, setMsg] = useState([])
-
-  const [formData, setFormData] = useState({
+  const { push } = useRouter()
+  const [state, setState] = useState({
     email: '',
     password: ''
   })
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }))
+  const handleChange = (evt) => {
+    const value = evt.target.value
+    setState({
+      ...state,
+      [evt.target.name]: value
+    })
   }
 
-  const handleSubmit = (e) => {
+  const handleOnSubmit = (e) => {
     e.preventDefault()
-    const reqData = formData
+    const reqData = state
     axios
       .post('http://localhost:8080/user/login', reqData)
       .then((response) => {
-        setMsg(response.data.msg)
-        localStorage.setItem('email', response.data.email)
-        console.log(response.data)
+        if (response.data.msg) {
+          toast.error(response.data.msg)
+        } else {
+          localStorage.setItem('email', response.data.email)
+          push('/home')
+        }
       })
       .catch((error) => {
         console.error('Error fetching data:', error)
@@ -40,26 +43,17 @@ const Login = (props) => {
     props.toggleLogin()
   }
   return (
-    <MantineProvider theme={{ colorScheme: 'white' }}>
-      <Box maw={720} mx="xl" className="w-96 py-16">
-        <Paper radius="md" p="xl" withBorder>
-          <Text size="lg" weight={500} className="mb-5">
-            Login Please
-          </Text>
+    <div className="form-container sign-in-container">
+      <form onSubmit={handleOnSubmit}>
+        <h1>Sign in</h1>
 
-          <form onClick={handleSubmit}>
-            <TextInput required label="Email" placeholder="hello@stalkyourstock.com" radius="md" name="email" onChange={handleChange} />
-
-            <PasswordInput required label="Password" placeholder="Your password" radius="md" name="password" onChange={handleChange} />
-            <div class="mt-4 flex justify-end">
-              <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
-                Submit
-              </button>
-            </div>
-          </form>
-        </Paper>
-      </Box>
-    </MantineProvider>
+        <div className="grid grid-cols-1 gap-3 my-5">
+          <input type="email" placeholder="Email" name="email" value={state.email} onChange={handleChange} />
+          <input type="password" name="password" placeholder="Password" value={state.password} onChange={handleChange} />
+        </div>
+        <button>Sign In</button>
+      </form>
+    </div>
   )
 }
 

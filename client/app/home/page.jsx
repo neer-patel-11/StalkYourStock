@@ -1,171 +1,62 @@
 'use client'
-import * as THREE from 'three/src/Three'
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
-// A THREE.js React renderer, see: https://github.com/drcmda/react-three-fiber
-import { extend as applyThree, Canvas, useFrame, useThree } from 'react-three-fiber'
-// A React animation lib, see: https://github.com/react-spring/react-spring
-import { apply as applySpring, useSpring, a, interpolate } from 'react-spring/three'
-import data from './data'
-import './styles.css'
-import Nav from '../Nav'
+import React from 'react'
+import Nav from '../Nav' // Import your Nav component
+import { block } from 'million'
 
-// Import and register postprocessing classes as three-native-elements for both react-three-fiber & react-spring
-// They'll be available as native elements <effectComposer /> from then on ...
-import { EffectComposer } from './postprocessing/EffectComposer'
-import { RenderPass } from './postprocessing/RenderPass'
-import { GlitchPass } from './postprocessing/GlitchPass'
-applySpring({ EffectComposer, RenderPass, GlitchPass })
-applyThree({ EffectComposer, RenderPass, GlitchPass })
-
-/** This component loads an image and projects it onto a plane */
-function Image({ url, opacity, scale, ...props }) {
-  const texture = useMemo(() => new THREE.TextureLoader().load(url), [url])
-  const [hovered, setHover] = useState(false)
-  const hover = useCallback(() => setHover(true), [])
-  const unhover = useCallback(() => setHover(false), [])
-  const { factor } = useSpring({ factor: hovered ? 1.1 : 1 })
+const HomePage = block(() => {
   return (
-    <a.mesh {...props} onHover={hover} onUnhover={unhover} scale={factor.interpolate((f) => [scale * f, scale * f, 1])}>
-      <planeBufferGeometry attach="geometry" args={[5, 5]} />
-      <a.meshLambertMaterial attach="material" transparent opacity={opacity}>
-        <primitive attach="map" object={texture} />
-      </a.meshLambertMaterial>
-    </a.mesh>
-  )
-}
+    <div className="bg-gray-900 text-white p-10">
+      <Nav />
+      <div className="container mx-auto text-center py-16">
+        <h1 className="text-5xl font-semibold mb-4">
+          Welcome to <span className="text-yellow-500 font-bold">Stalk</span> <span className="text-blue-500 font-bold">Your</span>{' '}
+          <span className="text-green-500 font-bold">Stock</span>
+        </h1>
 
-/** This renders text via canvas and projects it as a sprite */
-function Text({ children, position, opacity, color = 'white', fontSize = 410 }) {
-  const {
-    size: { width, height },
-    viewport: { width: viewportWidth, height: viewportHeight }
-  } = useThree()
-  const scale = viewportWidth > viewportHeight ? viewportWidth : viewportHeight
-  const canvas = useMemo(() => {
-    const canvas = document.createElement('canvas')
-    canvas.width = canvas.height = 2048
-    const context = canvas.getContext('2d')
-    context.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif`
-    context.textAlign = 'center'
-    context.textBaseline = 'middle'
-    context.fillStyle = color
-    context.fillText(children, 1024, 1024 - 410 / 2)
-    return canvas
-  }, [children, width, height])
-  return (
-    <a.sprite scale={[scale, scale, 1]} position={position}>
-      <a.spriteMaterial attach="material" transparent opacity={opacity}>
-        <canvasTexture attach="map" image={canvas} premultiplyAlpha onUpdate={(s) => (s.needsUpdate = true)} />
-      </a.spriteMaterial>
-    </a.sprite>
-  )
-}
-
-/** This component creates a fullscreen colored plane */
-function Background({ color }) {
-  const { viewport } = useThree()
-  return (
-    <mesh scale={[viewport.width, viewport.height, 1]}>
-      <planeGeometry attach="geometry" args={[1, 1]} />
-      <a.meshBasicMaterial attach="material" color={color} depthTest={false} />
-    </mesh>
-  )
-}
-
-/** This component rotates a bunch of stars */
-function Stars({ position }) {
-  let group = useRef()
-  let theta = 0
-  useFrame(() => {
-    const r = 5 * Math.sin(THREE.Math.degToRad((theta += 0.01)))
-    const s = Math.cos(THREE.Math.degToRad(theta * 2))
-    group.current.rotation.set(r, r, r)
-    group.current.scale.set(s, s, s)
-  })
-  const [geo, mat, coords] = useMemo(() => {
-    const geo = new THREE.SphereBufferGeometry(1, 10, 10)
-    const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color('peachpuff'), transparent: true })
-    const coords = new Array(1000).fill().map((i) => [Math.random() * 800 - 400, Math.random() * 800 - 400, Math.random() * 800 - 400])
-    return [geo, mat, coords]
-  }, [])
-  return (
-    <a.group ref={group} position={position}>
-      {coords.map(([p1, p2, p3], i) => (
-        <mesh key={i} geometry={geo} material={mat} position={[p1, p2, p3]} />
-      ))}
-    </a.group>
-  )
-}
-
-/** This component creates a glitch effect */
-const Effects = React.memo(({ factor }) => {
-  const { gl, scene, camera, size } = useThree()
-  const composer = useRef()
-  useEffect(() => void composer.current.setSize(size.width, size.height), [size])
-  // This takes over as the main render-loop (when 2nd arg is set to true)
-  useFrame(() => composer.current.render(), 1)
-  return (
-    <effectComposer ref={composer} args={[gl]}>
-      <renderPass attachArray="passes" args={[scene, camera]} />
-      <a.glitchPass attachArray="passes" renderToScreen factor={factor} />
-    </effectComposer>
+        <p className="text-xl mb-8">Learn, Invest, and Grow Your Portfolio</p>
+        <a
+          href="/start-trading"
+          className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-full text-lg transition duration-300 ease-in-out">
+          Get Started
+        </a>
+      </div>
+      <div className="container mx-auto mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="p-6 bg-gray-800 rounded-lg shadow-md">
+            <h2 className="text-3xl font-semibold mb-4">Learn and Practice</h2>
+            <p className="text-gray-400 mb-4">
+              Use our simulator to learn about stock market trading and practice with virtual money. Access a wide range of educational resources, articles, and
+              video tutorials.
+            </p>
+          </div>
+          <div className="p-6 bg-gray-800 rounded-lg shadow-md">
+            <h2 className="text-3xl font-semibold mb-4">Invest Wisely</h2>
+            <p className="text-gray-400 mb-4">
+              Make informed investment decisions, explore different stocks, and track your portfolio's performance. Stay updated with real-time stock data,
+              news, and market trends.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="container mx-auto mt-12">
+        <h2 className="text-4xl font-semibold mb-6">Featured Articles</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Add featured articles here */}
+          <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+            <h3 className="text-2xl font-semibold mb-3">How to Diversify Your Investment Portfolio</h3>
+            <p className="text-gray-400">Learn the importance of diversification and strategies to spread your investments effectively.</p>
+          </div>
+          <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+            <h3 className="text-2xl font-semibold mb-3">Understanding Stock Market Volatility</h3>
+            <p className="text-gray-400">Discover the factors contributing to stock market volatility and how to navigate through turbulent times.</p>
+          </div>
+          <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+            <h3 className="text-2xl font-semibold mb-3">Top Stock Picks for 2023</h3>
+            <p className="text-gray-400">Explore the top stocks that experts are recommending for this year and make informed investment choices.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 })
-
-/** This component creates a bunch of parallaxed images */
-function Images({ top, mouse, scrollMax }) {
-  return data.map(([url, x, y, factor, z, scale], index) => (
-    <Image
-      key={index}
-      url={url}
-      scale={scale}
-      opacity={top.interpolate([0, 500], [0, 1])}
-      position={interpolate([top, mouse], (top, mouse) => [
-        (-mouse[0] * factor) / 50000 + x,
-        (mouse[1] * factor) / 50000 + y * 1.15 + ((top * factor) / scrollMax) * 2,
-        z + top / 2000
-      ])}
-    />
-  ))
-}
-
-/** This component maintains the scene */
-function Scene({ top, mouse }) {
-  const { size } = useThree()
-  const scrollMax = size.height * 4.5
-  return (
-    <>
-      <a.spotLight intensity={1.2} color="white" position={mouse.interpolate((x, y) => [x / 100, -y / 100, 6.5])} />
-      <Effects factor={top.interpolate([0, 150], [1, 0])} />
-      <Background color={top.interpolate([0, scrollMax * 0.25, scrollMax * 0.8, scrollMax], ['#27282F', '#247BA0', '#70C1B3', '#f8f3f1'])} />
-      <Stars position={top.interpolate((top) => [0, -1 + top / 20, 0])} />
-      <Images top={top} mouse={mouse} scrollMax={scrollMax} />
-      <Text opacity={top.interpolate([0, 100], [1, 0])} position={top.interpolate((top) => [0, -1 + top / 200, 0])} fontSize={100}>
-        Stalk Your Stock
-      </Text>
-      <Text position={top.interpolate((top) => [0, -20 + ((top * 10) / scrollMax) * 2, 0])} color="black" fontSize={150}>
-        Welcome
-      </Text>
-    </>
-  )
-}
-
-const Home = () => {
-  const [{ top, mouse }, set] = useSpring(() => ({ top: 0, mouse: [0, 0] }))
-  const onMouseMove = useCallback(({ clientX: x, clientY: y }) => set({ mouse: [x - window.innerWidth / 2, y - window.innerHeight / 2] }), [])
-  const onScroll = useCallback((e) => set({ top: e.target.scrollTop }), [])
-  return (
-    <>
-      <Nav></Nav>
-
-      <Canvas className="canvas">
-        <Scene top={top} mouse={mouse} />
-      </Canvas>
-      <div className="scroll-container" onScroll={onScroll} onMouseMove={onMouseMove}>
-        <div style={{ height: '525vh' }} />
-      </div>
-    </>
-  )
-}
-
-export default Home
+export default HomePage

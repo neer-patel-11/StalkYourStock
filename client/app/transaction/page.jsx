@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react'
 import Transaction from '@components/profile/Transaction'
 import Nav from '../Nav'
 import PaticlesBackground from '@components/PaticlesBackground'
+import { block } from 'million'
 
-export default function Home() {
+const Home = block(() => {
   return (
     <>
       <PaticlesBackground></PaticlesBackground>
@@ -14,4 +15,5 @@ export default function Home() {
       <Transaction />
     </>
   )
-}
+})
+export default Home
