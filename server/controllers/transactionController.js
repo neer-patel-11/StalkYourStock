@@ -41,7 +41,7 @@ const addTransaction = async (req, res) => {
           let avg =
             Number(portfolio.currentBuyings) /
             (Number(portfolio.currentQuantity) * 1.0);
-          let buyings = Number(portfolio.currentBuyings) - avg * Number(count);
+          let buyings = Number(portfolio.currentBuyings) +  Number(currentPrice)* Number(count);
           portfolio.currentBuyings = buyings;
           let quantity = Number(count) + Number(portfolio.currentQuantity);
           portfolio.currentQuantity = quantity;
